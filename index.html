@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>周年快乐 · 洪家杰与刘曦彤的 1000 天</title>
 <meta name="description" content="洪家杰与刘曦彤，2024.01.30 起，一千个日夜。">
+<script>try{if(localStorage.getItem('love1000_ok')==='1')document.documentElement.classList.add('gate-off');}catch(e){}</script>
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
 <style>
   :root {
@@ -315,6 +316,67 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
+  /* ===== 纪念日门禁 ===== */
+  body.locked { overflow: hidden; }
+  html.gate-off #gate { display: none !important; }
+  #gate {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center; padding: 28px;
+    background: radial-gradient(ellipse at 50% 28%, rgba(18,38,74,0.82), rgba(6,12,26,0.96));
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  #gate.leaving { opacity: 0; visibility: hidden; }
+  .gate-card {
+    width: 100%; max-width: 340px; text-align: center;
+    border: 1px solid var(--line); border-radius: 24px;
+    padding: 38px 26px 30px;
+    background: linear-gradient(180deg, rgba(19,40,78,0.86), rgba(11,26,54,0.92));
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(240,216,150,0.10);
+  }
+  .gate-planet {
+    width: 74px; height: 74px; margin: 0 auto 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--gold);
+    background: radial-gradient(circle at 34% 30%, rgba(60,96,168,0.55), rgba(11,26,54,0.96) 72%);
+    box-shadow: 0 0 30px rgba(217,180,91,0.3), inset 0 0 18px rgba(217,180,91,0.18);
+    animation: coreBreath 4s ease-in-out infinite;
+  }
+  .gate-planet svg { width: 34px; height: 34px; }
+  .gate-kicker { font-size: 11px; letter-spacing: 0.38em; color: var(--gold); text-indent: 0.38em; }
+  .gate-title {
+    margin-top: 12px; font-family: var(--serif); font-weight: 700;
+    font-size: 22px; letter-spacing: 0.14em; color: var(--gold-bright);
+  }
+  .gate-sub { margin-top: 10px; font-size: 12px; letter-spacing: 0.10em; color: var(--ink-soft); line-height: 1.9; }
+  .gate-input {
+    width: 100%; margin-top: 22px; padding: 13px 16px; text-align: center;
+    font-family: var(--serif); font-size: 17px; letter-spacing: 0.18em; color: var(--gold-bright);
+    background: rgba(8,18,38,0.7); border: 1.5px solid var(--line); border-radius: 14px; outline: none;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .gate-input::placeholder { color: rgba(184,178,162,0.5); letter-spacing: 0.12em; }
+  .gate-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217,180,91,0.14); }
+  .gate-btn {
+    width: 100%; margin-top: 14px; padding: 13px 16px; cursor: pointer;
+    font-family: var(--serif); font-size: 15px; font-weight: 700; letter-spacing: 0.42em; text-indent: 0.42em;
+    color: #0b1a36; border: none; border-radius: 14px;
+    background: linear-gradient(145deg, #f0d896, #d9b45b);
+    box-shadow: 0 10px 26px -12px rgba(240,216,150,0.7);
+  }
+  .gate-btn:active { transform: translateY(1px); }
+  .gate-err {
+    margin-top: 12px; font-size: 12px; letter-spacing: 0.12em; color: #e0a0a0;
+    opacity: 0; transition: opacity .25s; min-height: 16px;
+  }
+  .gate-err.show { opacity: 1; }
+  .gate-foot { margin-top: 18px; font-size: 10px; letter-spacing: 0.30em; color: rgba(184,178,162,0.5); text-transform: uppercase; }
+  #gate.shake .gate-card { animation: gateShake .4s ease; }
+  @keyframes gateShake {
+    0%,100% { transform: translateX(0); } 20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(5px); }
+  }
+
   @media (max-width: 380px) {
     .wrap { padding: 0 16px; }
     .node { width: 36px; height: 36px; margin-left: -18px; font-size: 10px; }
@@ -334,6 +396,27 @@
 <div class="meteor m1" aria-hidden="true"></div>
 <div class="meteor m2" aria-hidden="true"></div>
 <div class="meteor m3" aria-hidden="true"></div>
+
+<!-- 纪念日门禁 -->
+<div id="gate" role="dialog" aria-modal="true" aria-label="输入纪念日进入">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <div class="gate-planet" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#f0d896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="6.2"/>
+        <ellipse cx="12" cy="12" rx="10.5" ry="3.4" transform="rotate(-24 12 12)"/>
+        <circle cx="12" cy="12" r="1.1" fill="#f0d896" stroke="none"/>
+      </svg>
+    </div>
+    <div class="gate-kicker">OUR LITTLE PLANET</div>
+    <div class="gate-title">输入我们的纪念日</div>
+    <p class="gate-sub">在一起的那一天<br>格式如 2024.01.30</p>
+    <input class="gate-input" id="gateInput" type="text" inputmode="numeric"
+           placeholder="YYYY.MM.DD" aria-label="纪念日日期" maxlength="12">
+    <button class="gate-btn" type="submit">进 入 星 空</button>
+    <div class="gate-err" id="gateErr">日期不对，再想一想</div>
+    <div class="gate-foot">B612 · 只对知道答案的人开放</div>
+  </form>
+</div>
 
 <!-- Hero -->
 <header class="hero">
@@ -653,15 +736,60 @@
       }
     });
     bgm.addEventListener('ended', function () { setPlaying(false); });
-    function autoStart() {
+    // 暴露给门禁：解锁瞬间是用户手势，此时起播成功率最高
+    window.__startBgm = function () {
       if (playing) return;
       var p = bgm.play();
       if (p && p.then) p.then(function () { setPlaying(true); }).catch(function () {});
-      document.removeEventListener('touchstart', autoStart);
-      document.removeEventListener('click', autoStart);
+    };
+    // 解锁之后的任意一次交互兜底起播（门禁已拦截解锁前的操作）
+    document.addEventListener('touchstart', function () { if (window.__unlocked) window.__startBgm(); }, { passive: true });
+    document.addEventListener('click', function () { if (window.__unlocked) window.__startBgm(); });
+  })();
+
+  // ===== 纪念日门禁 =====
+  (function () {
+    var gate = document.getElementById('gate');
+    if (!gate) return;
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gateInput');
+    var err = document.getElementById('gateErr');
+    // 本机已解锁过（head 内联脚本已加 gate-off），直接放行
+    if (document.documentElement.classList.contains('gate-off')) return;
+    document.body.classList.add('locked');
+    var ANSWER = '20240130'; // 在一起的日子 2024.01.30，容忍 . - / 年月日 等分隔与不补零
+    function normDate(v) {
+      var parts = (v || '').match(/\d+/g) || [];
+      if (parts.length === 3) {
+        var pad = function (x) { return x.length === 1 ? '0' + x : x; };
+        return parts[0] + pad(parts[1]) + pad(parts[2]);
+      }
+      return (v || '').replace(/\D/g, '');
     }
-    document.addEventListener('touchstart', autoStart, { once: true, passive: true });
-    document.addEventListener('click', autoStart, { once: true });
+    function unlock() {
+      try { localStorage.setItem('love1000_ok', '1'); } catch (e) {}
+      window.__unlocked = true;
+      document.documentElement.classList.add('gate-off');
+      document.body.classList.remove('locked');
+      gate.classList.add('leaving');
+      setTimeout(function () { gate.style.display = 'none'; }, 650);
+      if (window.__startBgm) window.__startBgm();
+    }
+    function fail() {
+      input.value = '';
+      err.classList.add('show');
+      gate.classList.remove('shake');
+      void gate.offsetWidth; // 重置抖动动画
+      gate.classList.add('shake');
+      input.focus();
+    }
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var digits = normDate(input.value);
+      if (digits === ANSWER) unlock();
+      else fail();
+    });
+    setTimeout(function () { try { input.focus(); } catch (e) {} }, 400);
   })();
 </script>
 </body>
